@@ -4,6 +4,8 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+# from .routers import recipes
+
 # Help from https://fastapi.tiangolo.com/advanced/events/
 # and https://fastapi.tiangolo.com/tutorial/bigger-applications/
 
@@ -39,13 +41,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# app.include_router(recipes.router)
+
 
 @app.get("/")
 async def root():
     return {"message": "Welcome to Become a Chief API"}
 
 
-@app.get("/recipe_of_the_day")
+@app.get("/recipes/recipe_of_the_day")
 async def recipe_of_the_day():
     return {"message": "Welcome to Become a Chief API"}
 

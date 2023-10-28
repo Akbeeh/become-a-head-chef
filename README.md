@@ -6,9 +6,9 @@ Help from:
 
 - [Poetry](https://python-poetry.org)
 - [FastAPI](https://fastapi.tiangolo.com)
+- [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/)
+- [Amazon SDKs Python Boto3 with Amazon DynamoDB](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/dynamodb.html)
 - [React](https://react.dev)
-- [MongoDB](https://www.mongodb.com)
-- [PyMongo](https://pymongo.readthedocs.io/en/stable/)
 - [Airflow](https://airflow.apache.org)
 - [Pytest](https://docs.pytest.org)
 
@@ -85,9 +85,13 @@ poetry run uvicorn app.main:app --reload
 npm run dev
 ```
 
-### 1. Create the Python script(s)
+### 1. Project architecture
 
-- The generation of fake data is done using Faker, in the gen_fake_data.py file.
+- `backend`: contains the backend code (Python)
+  - `app`: contains the code for the API (FastAPI)
+    - `database`: contains the code to interact with the database (DynamoDB) and the code for scraping the data (BeautifulSoup)
+    - `routers`: contains the code for the routers
+- `frontend`: contains the frontend code (React)
 
 ### 2. Create DAG (Directed Acyclic Graph)
 
@@ -96,7 +100,8 @@ Therefore, the `transaction_dag.py` file must be located in the `airflow\dags` f
 
 ### Interesting points / Issues I encountered
 
-- Yes
+- When we want to do web scraping, we sometimes need to provide a header to the request. Otherwise, the website will not allow us to scrap the information. To do so, we can use the `headers` parameter of the `requests.get()` function. To get a correct `User-Agent` header, we can use the website [https://urlscan.io](https://urlscan.io).
+
 - **WARNING for Windows Users**: `pwd` module does not work on Windows as it is a UNIX only package for managing passwords (used to start the airflow server...).
 
 ### Extra: Setup of Makefile

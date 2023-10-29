@@ -1,0 +1,9 @@
+.p-dataview {
+  .p-dataview-content,
+  .p-paginator-bottom {
+    background-color: transparent;
+  }
+  .p-highlight {
+    color: white;
+  }
+}

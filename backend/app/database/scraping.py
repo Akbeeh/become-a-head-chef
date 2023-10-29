@@ -32,6 +32,7 @@ def get_random_recipe(theme: str) -> str:
     element = soup.select_one("#mntl-taxonomysc-article-list-group_1-0")
     recipes = element.find_all("a")
     n_recipe = randint(0, len(recipes) - 1)
+    # TODO: find a way to retrieve image
     return recipes[n_recipe]["href"]
 
 
@@ -47,17 +48,17 @@ def get_info_recipe(url: str) -> dict:
     response = requests.get(url, headers=HEADERS)
     soup = BeautifulSoup(response.text, "html.parser")
     title = soup.find("h1").text.strip()
-    header = soup.select_one("#article-subheading_1-0").text.strip()
+    description = soup.select_one("#article-subheading_1-0").text.strip()
 
-    info_recipe_items = soup.find(
+    about_recipe_items = soup.find(
         "div", class_="mntl-recipe-details__content"
     ).find_all("div", class_="mntl-recipe-details__item")
 
-    info_recipe = {}
-    for item in info_recipe_items:
+    about_recipe = {}
+    for item in about_recipe_items:
         label = item.find("div", class_="mntl-recipe-details__label").text[:-1]
         value = item.find("div", class_="mntl-recipe-details__value").text[:-1]
-        info_recipe[label] = value
+        about_recipe[label] = value
 
     nutrition_items = soup.find(
         "tbody", class_="mntl-nutrition-facts-summary__table-body"
@@ -70,7 +71,7 @@ def get_info_recipe(url: str) -> dict:
 
     return {
         "title": title,
-        "header": header,
-        "info_recipe": info_recipe,
+        "description": description,
+        "about_recipe": about_recipe,
         "nutrition": nutrition,
     }

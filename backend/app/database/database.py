@@ -1,3 +1,5 @@
+import json
+
 import boto3
 from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
@@ -70,6 +72,19 @@ def get_table():
     """Get the table"""
     table = init_dynamodb().Table(TABLE_NAME)
     return table
+
+
+def save_table() -> None:
+    """Save the table locally in JSON format"""
+    table = get_table()
+
+    # Scan the table to retrieve all items
+    response = table.scan()
+    items = response.get("Items", [])
+
+    json_path = "app/database/recipes.json"
+    with open(json_path, "w") as json_file:
+        json.dump(items, json_file, indent=4)
 
 
 def delete_table() -> None:

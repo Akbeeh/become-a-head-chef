@@ -1,0 +1,7 @@
+.layout-footer {
+  padding: 1rem;
+  .footer-content {
+    display: block;
+    text-align: center;
+  }
+}

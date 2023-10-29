@@ -45,7 +45,7 @@ poetry add beautifulsoup4 fastapi uvicorn boto3 apache-airflow pytest
 ```bash
 npm create vite@latest frontend -- --template react-ts
 cd frontend
-npm install --save react react-dom react-router-dom
+npm install --save react react-dom react-router-dom primereact primeicons primeflex @mui/icons-material @mui/material @emotion/styled @emotion/react
 ```
 
 - Airflow (do not forget to run with Poetry: `poetry run...`)
@@ -101,7 +101,8 @@ Therefore, the `transaction_dag.py` file must be located in the `airflow\dags` f
 ### Interesting points / Issues I encountered
 
 - When we want to do web scraping, we sometimes need to provide a header to the request. Otherwise, the website will not allow us to scrap the information. To do so, we can use the `headers` parameter of the `requests.get()` function. To get a correct `User-Agent` header, we can use the website [https://urlscan.io](https://urlscan.io).
-
+- In React, with the use of useState, we need to be careful about the initial value. It's better to use `null` than `undefined` as initial value.
+- Trick for CSS: use the console to see which classe(s) are used for a specific element. Then, we can use the same class in our CSS file.
 - **WARNING for Windows Users**: `pwd` module does not work on Windows as it is a UNIX only package for managing passwords (used to start the airflow server...).
 
 ### Extra: Setup of Makefile

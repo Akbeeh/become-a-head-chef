@@ -11,7 +11,7 @@ export default function Footer() {
       </div>
       <div className="footer-content">
         <span className="footer-text" style={{ marginRight: "5px" }}>
-          Become a Chief © 2023
+          Become a Head Chef © 2023
         </span>
         <span className="footer-text" style={{ marginRight: "5px" }}>
           |

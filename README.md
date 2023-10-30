@@ -37,6 +37,7 @@ pip install poetry
 poetry new backend --name="app"
 cd backend
 poetry add beautifulsoup4 fastapi uvicorn boto3 apache-airflow pytest
+pip install python-dotenv # to use .env file
 # `poetry shell` to access the environment in the terminal and `exit` to exit the environment
 ```
 
@@ -48,7 +49,11 @@ cd frontend
 npm install --save react react-dom react-router-dom primereact primeicons primeflex @mui/icons-material @mui/material @emotion/styled @emotion/react
 ```
 
-- Airflow (do not forget to run with Poetry: `poetry run...`)
+- AWS:
+  - Create an IAM user with the right policies to access the DynamoDB service and permissions to read and write data (use the visual editor or create a custom JSON).
+  - Store carefully the access keys, for instance in a `.env` file.
+  - Be careful with the [Free Tier](https://aws.amazon.com/pm/dynamodb/), it is easy to exceed the limits.
+- Airflow (do not forget to run with Poetry: `poetry run...`).
 
 ```bash
 # At the project root

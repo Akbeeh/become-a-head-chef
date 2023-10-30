@@ -1,18 +1,30 @@
+import calendar
 import json
+import os
+from datetime import date
 
 import boto3
+from app.database.scraping import DAY_THEME
 from boto3.dynamodb.conditions import Key
 from botocore.exceptions import ClientError
+from dotenv import load_dotenv
 
 # Help from https://boto3.amazonaws.com/v1/documentation/api/latest/guide/dynamodb.html
 
 # Name of the table
 TABLE_NAME = "recipes"
 
+load_dotenv()
+
 
 def init_dynamodb():
     """Initialize the service resource"""
-    dynamodb = boto3.resource("dynamodb")
+    dynamodb = boto3.resource(
+        service_name="dynamodb",
+        region_name="eu-west-3",
+        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    )
     return dynamodb
 
 
@@ -95,10 +107,10 @@ def delete_table() -> None:
 
 
 def add_recipe(
-    day: str,
-    theme: str,
+    day_theme: str,
     date: str,
     url: str,
+    url_image: str,
     info_recipe: dict,
 ) -> None:
     """Add a recipe to the table
@@ -108,26 +120,28 @@ def add_recipe(
         theme (str): The theme of the recipe
         date (str): The date added to the table
         url (str): The url of the recipe
+        url_image (str): The url of the image of the recipe
         info_recipe (dict): The information of the recipe
     """
     table = get_table()
     table.put_item(
         Item={
-            "day_theme": f"{day}_{theme}",
+            "day_theme": day_theme,
             "date": date,
             "url": url,
+            "url_image": url_image,
             "info_recipe": info_recipe,
         }
     )
 
 
-def get_recipe(day: str, theme: str, date: str) -> dict:
+def get_recipe(day: str, theme: str, date_str: str) -> dict:
     """Get a recipe from the table
 
     Args:
         day (str): The day of the theme
         theme (str): The theme of the recipe
-        date (str): The date added to the table
+        date_str (str): The date added to the table
 
     Returns:
         dict: The recipe
@@ -136,40 +150,61 @@ def get_recipe(day: str, theme: str, date: str) -> dict:
     response = table.get_item(
         Key={
             "day_theme": f"{day}_{theme}",
-            "date": date,
+            "date": date_str,
         }
     )
     return response["Item"]
 
 
-def get_recipe_by_date(date: str) -> dict:
+def get_recipe_by_date(date_str: str) -> dict:
     """Get a recipe from the table by date
 
     Args:
-        date (str): The date added to the table
+        date_str (str): The date added to the table
 
     Returns:
         dict: The recipe
     """
     table = get_table()
+    today = calendar.day_name[date.fromisoformat(date_str).weekday()]
     response = table.query(
-        KeyConditionExpression=Key("date").eq(date),
+        KeyConditionExpression=Key("day_theme").eq(
+            f"{today}_{DAY_THEME[today].capitalize()}"
+        )
+        & Key("date").eq(date_str),
     )
     return response["Items"][0]
 
 
-def delete_recipe(day: str, theme: str, date: str) -> None:
+def delete_recipe(day: str, theme: str, date_str: str) -> None:
     """Delete a recipe from the table
 
     Args:
         day (str): The day of the theme
         theme (str): The theme of the recipe
-        date (str): The date added to the table
+        date_str (str): The date added to the table
     """
     table = get_table()
     table.delete_item(
         Key={
             "day_theme": f"{day}_{theme}",
-            "date": date,
+            "date": date_str,
         }
     )
+
+
+# if __name__ == "__main__":
+# from app.database.scraping import get_all_info_recipe
+
+# recipe_of_the_day = get_all_info_recipe()
+# add_recipe(
+#     recipe_of_the_day["day_theme"],
+#     recipe_of_the_day["date"],
+#     recipe_of_the_day["url"],
+#     recipe_of_the_day["url_image"],
+#     recipe_of_the_day["info_recipe"],
+# )
+# print(get_recipe("Monday", "Dessert", "2023-10-30"))
+# print(get_recipe_by_date("2023-10-30"))
+# delete_recipe("Monday", "Dessert", "2023-10-30")
+# print(get_table())

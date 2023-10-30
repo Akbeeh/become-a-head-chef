@@ -11,6 +11,10 @@ export default function Navbar() {
       label: "History",
       url: "/history",
     },
+    {
+      label: "About",
+      url: "/about",
+    },
   ];
 
   const start = (

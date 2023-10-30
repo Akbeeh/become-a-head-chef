@@ -6,6 +6,7 @@ export interface RecipeInterface {
   day_theme: string;
   date: string;
   url: string;
+  url_image: string;
   info_recipe: RecipeDetailsInterface;
 }
 

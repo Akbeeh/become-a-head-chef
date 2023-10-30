@@ -6,7 +6,7 @@ function Home() {
       <Navbar />
       <div>
         <div className="head-container">
-          <h1>Become a Chief</h1>
+          <h1>Become a Head Chef</h1>
           <p>
             Master the culinary arts by exploring and preparing a new dish every
             day!

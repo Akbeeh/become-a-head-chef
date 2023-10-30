@@ -32,7 +32,7 @@ def get_random_recipe(theme: str) -> str:
     element = soup.select_one("#mntl-taxonomysc-article-list-group_1-0")
     recipes = element.find_all("a")
     n_recipe = randint(0, len(recipes) - 1)
-    # TODO: find a way to retrieve image
+    print(recipes[n_recipe].find("img").get("data-src"))
     return recipes[n_recipe]["href"]
 
 
@@ -50,24 +50,30 @@ def get_info_recipe(url: str) -> dict:
     title = soup.find("h1").text.strip()
     description = soup.select_one("#article-subheading_1-0").text.strip()
 
-    about_recipe_items = soup.find(
-        "div", class_="mntl-recipe-details__content"
-    ).find_all("div", class_="mntl-recipe-details__item")
-
     about_recipe = {}
-    for item in about_recipe_items:
-        label = item.find("div", class_="mntl-recipe-details__label").text[:-1]
-        value = item.find("div", class_="mntl-recipe-details__value").text[:-1]
-        about_recipe[label] = value
+    try:
+        about_recipe_items = soup.find(
+            "div", class_="mntl-recipe-details__content"
+        ).find_all("div", class_="mntl-recipe-details__item")
 
-    nutrition_items = soup.find(
-        "tbody", class_="mntl-nutrition-facts-summary__table-body"
-    ).find_all("tr", class_="mntl-nutrition-facts-summary__table-row")
+        for item in about_recipe_items:
+            label = item.find("div", class_="mntl-recipe-details__label").text[:-1]
+            value = item.find("div", class_="mntl-recipe-details__value").text[:-1]
+            about_recipe[label] = value
+    except AttributeError:
+        None
 
     nutrition = {}
-    for item in nutrition_items:
-        tds = item.find_all("td")
-        nutrition[tds[1].text.strip()] = tds[0].text.strip()
+    try:
+        nutrition_items = soup.find(
+            "tbody", class_="mntl-nutrition-facts-summary__table-body"
+        ).find_all("tr", class_="mntl-nutrition-facts-summary__table-row")
+
+        for item in nutrition_items:
+            tds = item.find_all("td")
+            nutrition[tds[1].text.strip()] = tds[0].text.strip()
+    except AttributeError:
+        None
 
     return {
         "title": title,

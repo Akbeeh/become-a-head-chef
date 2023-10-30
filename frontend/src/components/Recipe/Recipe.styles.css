@@ -9,10 +9,19 @@
   .element {
     height: 100%;
   }
+
+  .column img {
+    margin-top: 1.5rem;
+  }
 }
 
-@media (max-width: 740px) {
+@media (max-width: 868px) {
   .grid-content {
     display: block;
+
+    .column img {
+      margin-top: 0;
+      max-width: 80%;
+    }
   }
 }

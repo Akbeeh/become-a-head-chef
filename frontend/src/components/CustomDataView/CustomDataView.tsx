@@ -26,7 +26,7 @@ export default function CustomDataView() {
         <div className="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
           <img
             className="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
-            src={`src/assets/hat_chief.svg`}
+            src={recipe.url_image}
             alt={recipe.info_recipe.title}
           />
           <div className="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
@@ -66,12 +66,14 @@ export default function CustomDataView() {
 
   return (
     <div className="card">
-      <DataView
-        value={recipes}
-        itemTemplate={itemTemplate}
-        paginator
-        rows={7}
-      />
+      {recipes.length > 0 && (
+        <DataView
+          value={recipes}
+          itemTemplate={itemTemplate}
+          paginator
+          rows={7}
+        />
+      )}
     </div>
   );
 }

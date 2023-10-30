@@ -27,13 +27,15 @@ export default function Recipe() {
           <p>{recipe.info_recipe.description}</p>
 
           <div className="grid-content">
-            <div className="column">
-              <img
-                alt="Recipe image"
-                src="src/assets/hat_chief.svg"
-                height="100"
-                className="p-mr-2"
-              />
+            <div
+              className="column"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <img alt="Recipe image" src={recipe.url_image} />
             </div>
             <div className="column">
               <Fieldset

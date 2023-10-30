@@ -1,4 +1,4 @@
-# Become a chief
+# Become a Head Chef
 
 This small Data Engineering project focuses on collecting, processing, and presenting recipe data from the Allrecipes website. The goal is to build a structured dataset containing recipe titles, nutrition facts, photos, prep and cook times, and more. The project will involve web scraping, data extraction, and data transformation, preparing the groundwork for a user-friendly web app.
 
@@ -92,6 +92,9 @@ npm run dev
     - `database`: contains the code to interact with the database (DynamoDB) and the code for scraping the data (BeautifulSoup)
     - `routers`: contains the code for the routers
 - `frontend`: contains the frontend code (React)
+  - `src`: contains the code for the frontend
+    - `components`: contains the code for the components
+    - `pages`: contains the code for the pages
 
 ### 2. Create DAG (Directed Acyclic Graph)
 

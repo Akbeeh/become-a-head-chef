@@ -36,7 +36,7 @@ pip install poetry
 # `poetry init --no-interaction` to initialize a pre-existing project
 poetry new backend --name="app"
 cd backend
-poetry add beautifulsoup4 fastapi uvicorn boto3 apache-airflow connexion pytest werkzeug=2.2.3
+poetry add beautifulsoup4 fastapi python-dotenv uvicorn boto3 apache-airflow connexion pytest werkzeug=2.2.3
 pip install python-dotenv # to use .env file
 # `poetry shell` to access the environment in the terminal and `exit` to exit the environment
 ```
@@ -112,7 +112,7 @@ To create a pipeline orchestrated by Airflow, we need to create a DAG. The DAG i
 - In React, with the use of useState, we need to be careful about the initial value. It's better to use `null` than `undefined` as initial value.
 - Trick for CSS: use the console to see which classe(s) are used for a specific element. Then, we can use the same class in our CSS file.
 - Use of Airflow: downgrading the `werkzeug` package to version 2.2.3 to avoid the error `ImportError: from werkzeug.urls import url_decode` when migrating the Airflow database.
-- Use of Airflow [XComs](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/xcoms.html): a mechanism to let tasks talk to each other, especially with [PythonOperator](https://airflow.apache.org/docs/apache-airflow/2.0.0/howto/operator/python.html#howto-operator-pythonoperator).
+- **Harsh case -> Resolved with a custom function.** (in `recipes_dag.py`) Use of Airflow [XComs](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/xcoms.html): a mechanism to let tasks talk to each other, especially with [PythonOperator](https://airflow.apache.org/docs/apache-airflow/2.0.0/howto/operator/python.html#howto-operator-pythonoperator).
 - **WARNING for Windows Users**: `pwd` module does not work on Windows as it is a UNIX only package for managing passwords (used to start the airflow server...).
 
 ### Extra: Setup of Makefile

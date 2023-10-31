@@ -15,6 +15,7 @@ beautifulsoup4 = "^4.12.2"
 boto3 = "^1.28.73"
 werkzeug = "2.2.3"
 connexion = "^2.14.2"
+python-dotenv = "^1.0.0"
 
 
 [build-system]

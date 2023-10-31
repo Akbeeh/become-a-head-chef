@@ -13,6 +13,8 @@ apache-airflow = "^2.7.2"
 pytest = "^7.4.3"
 beautifulsoup4 = "^4.12.2"
 boto3 = "^1.28.73"
+werkzeug = "2.2.3"
+connexion = "^2.14.2"
 
 
 [build-system]

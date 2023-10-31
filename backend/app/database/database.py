@@ -17,7 +17,7 @@ TABLE_NAME = "recipes"
 load_dotenv()
 
 
-def init_dynamodb():
+def _init_dynamodb():
     """Initialize the service resource"""
     dynamodb = boto3.resource(
         service_name="dynamodb",
@@ -38,7 +38,7 @@ def check_table_exists():
         bool: True if the table exists, False otherwise
     """
     try:
-        table = init_dynamodb().Table(TABLE_NAME)
+        table = _init_dynamodb().Table(TABLE_NAME)
         table.table_status
         return True
     except ClientError as e:
@@ -50,7 +50,7 @@ def check_table_exists():
 
 def create_table() -> None:
     """Create the table"""
-    table = init_dynamodb().create_table(
+    table = _init_dynamodb().create_table(
         TableName=TABLE_NAME,
         KeySchema=[
             {
@@ -82,7 +82,7 @@ def create_table() -> None:
 
 def get_table():
     """Get the table"""
-    table = init_dynamodb().Table(TABLE_NAME)
+    table = _init_dynamodb().Table(TABLE_NAME)
     return table
 
 
@@ -191,20 +191,3 @@ def delete_recipe(day: str, theme: str, date_str: str) -> None:
             "date": date_str,
         }
     )
-
-
-# if __name__ == "__main__":
-# from app.database.scraping import get_all_info_recipe
-
-# recipe_of_the_day = get_all_info_recipe()
-# add_recipe(
-#     recipe_of_the_day["day_theme"],
-#     recipe_of_the_day["date"],
-#     recipe_of_the_day["url"],
-#     recipe_of_the_day["url_image"],
-#     recipe_of_the_day["info_recipe"],
-# )
-# print(get_recipe("Monday", "Dessert", "2023-10-30"))
-# print(get_recipe_by_date("2023-10-30"))
-# delete_recipe("Monday", "Dessert", "2023-10-30")
-# print(get_table())

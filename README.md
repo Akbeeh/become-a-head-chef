@@ -36,7 +36,7 @@ pip install poetry
 # `poetry init --no-interaction` to initialize a pre-existing project
 poetry new backend --name="app"
 cd backend
-poetry add beautifulsoup4 fastapi uvicorn boto3 apache-airflow pytest
+poetry add beautifulsoup4 fastapi uvicorn boto3 apache-airflow connexion pytest werkzeug=2.2.3
 pip install python-dotenv # to use .env file
 # `poetry shell` to access the environment in the terminal and `exit` to exit the environment
 ```
@@ -56,12 +56,12 @@ npm install --save react react-dom react-router-dom primereact primeicons primef
 - Airflow (do not forget to run with Poetry: `poetry run...`).
 
 ```bash
-# At the project root
+# At the backend root
 # Everytime for a new terminal, must execute the line below to put correctly the AIRFLOW_HOME
 export AIRFLOW_HOME=$(pwd)/airflow
 airflow db migrate
 # And here replace the generated airflow.cfg by the personal one
-cp -f backend/airflow.cfg airflow/
+cp -fr airflow_files/* airflow/
 airflow users create --username admin --firstname admin --lastname admin --role Admin --email admin --password admin
 
 # To see the users
@@ -75,7 +75,8 @@ airflow scheduler
 ```bash
 # Some parameters changed made in the airflow.cfg
 # No need to change the default_time, it is utc which is recommended
-executor = LocalExecutor
+executor = SequentialExecutor
+dags_are_paused_at_creation = False
 load_examples = False
 expose_config = True
 ```
@@ -103,14 +104,15 @@ npm run dev
 
 ### 2. Create DAG (Directed Acyclic Graph)
 
-To generate continuously the data, DAGs need to be created. To perform this task, I decided to schedule the DAG for data generation every minute (so is the data processing). The DAGs are created in the `airflow\dags` folder.
-Therefore, the `transaction_dag.py` file must be located in the `airflow\dags` folder.
+To create a pipeline orchestrated by Airflow, we need to create a DAG. The DAG is created in the `airflow\dags` folder. Therefore, the `recipes_dag.py` file must be located in the `airflow\dags` folder. The DAG to get the recipe of the day is scheduled to run every day at 00:00 UTC.
 
 ### Interesting points / Issues I encountered
 
 - When we want to do web scraping, we sometimes need to provide a header to the request. Otherwise, the website will not allow us to scrap the information. To do so, we can use the `headers` parameter of the `requests.get()` function. To get a correct `User-Agent` header, we can use the website [https://urlscan.io](https://urlscan.io).
 - In React, with the use of useState, we need to be careful about the initial value. It's better to use `null` than `undefined` as initial value.
 - Trick for CSS: use the console to see which classe(s) are used for a specific element. Then, we can use the same class in our CSS file.
+- Use of Airflow: downgrading the `werkzeug` package to version 2.2.3 to avoid the error `ImportError: from werkzeug.urls import url_decode` when migrating the Airflow database.
+- Use of Airflow [XComs](https://airflow.apache.org/docs/apache-airflow/stable/core-concepts/xcoms.html): a mechanism to let tasks talk to each other, especially with [PythonOperator](https://airflow.apache.org/docs/apache-airflow/2.0.0/howto/operator/python.html#howto-operator-pythonoperator).
 - **WARNING for Windows Users**: `pwd` module does not work on Windows as it is a UNIX only package for managing passwords (used to start the airflow server...).
 
 ### Extra: Setup of Makefile

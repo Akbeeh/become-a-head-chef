@@ -87,8 +87,18 @@ expose_config = True
 # In the backend
 poetry run uvicorn app.main:app --reload
 
-# In the frontend
-npm run dev
+# In the frontend (for the development mode)
+npm run dev # for the development mode
+
+# In the frontend (to build the production mode)
+npm run build
+
+# In the frontend (to test the production mode locally)
+npm run preview
+
+# In the frontend (to serve the production mode)
+npm install -g serve # if not already installed
+serve -s dist
 ```
 
 ### 1. Project architecture

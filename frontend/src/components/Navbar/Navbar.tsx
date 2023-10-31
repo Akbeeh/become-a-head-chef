@@ -1,4 +1,5 @@
 import { MegaMenu } from "primereact/megamenu";
+import logo from "../../assets/hat_chief.svg";
 import "./Navbar.styles.css";
 
 export default function Navbar() {
@@ -17,14 +18,7 @@ export default function Navbar() {
     },
   ];
 
-  const start = (
-    <img
-      alt="logo"
-      src="src/assets/hat_chief.svg"
-      height="40"
-      className="p-mr-2"
-    />
-  );
+  const start = <img alt="logo" src={logo} height="40" className="p-mr-2" />;
 
   return (
     <div className="custom-navbar">

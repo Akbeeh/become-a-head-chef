@@ -23,7 +23,7 @@ def get_save_recipe():
 default_args = {
     "owner": "Become a Head Chef",
     "depends_on_past": False,
-    "start_date": datetime.today(),
+    "start_date": datetime(2023, 1, 1),
     "email_on_failure": False,
     "email_on_retry": False,
 }

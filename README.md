@@ -8,7 +8,7 @@ Help from:
 - [FastAPI](https://fastapi.tiangolo.com)
 - [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/)
 - [Amazon SDKs Python Boto3 with Amazon DynamoDB](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/dynamodb.html)
-- [React](https://react.dev)
+- [React](https://react.dev) (with [PrimeReact](https://primereact.org))
 - [Airflow](https://airflow.apache.org)
 - [Pytest](https://docs.pytest.org)
 

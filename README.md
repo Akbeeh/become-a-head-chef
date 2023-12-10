@@ -24,6 +24,8 @@ In this project, we are creating a web app that offers users a unique culinary e
 - **Saturday Salads**: Savor refreshing salads for a healthy weekend.
 - **Sunday Drinks**: Unwind with a selection of beverages to complete your weekend.
 
+!(Become a Head Chef GIF)[images/become-a-head-chef.gif]
+
 ## Steps followed
 
 ### 0. Installation & Setup

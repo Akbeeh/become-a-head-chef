@@ -17,7 +17,7 @@ export default function Footer() {
           |
         </span>
         <span className="footer-text" style={{ marginRight: "5px" }}>
-          Made by <a href="https://github.com/Akbeeh">William M</a>
+          Made by <a href="https://github.com/mokwilliam">William M</a>
         </span>
       </div>
     </div>
